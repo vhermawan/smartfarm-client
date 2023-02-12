@@ -1,6 +1,5 @@
 import Layout from "@components/Layouts/Layout";
 import { ActionIcon, Box, Button, Flex, Group, Text, Title } from '@mantine/core';
-import dayjs from 'dayjs';
 import { DataTable } from 'mantine-datatable';
 import { useEffect, useState } from 'react';
 import employees from '../../data/example.json';
