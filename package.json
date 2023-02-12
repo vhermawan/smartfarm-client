@@ -42,6 +42,7 @@
     "prettier": "^2.8.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "lint-staged": "^11.2.6",
     "react-hot-toast": "^2.4.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
@@ -55,6 +56,7 @@
     "test": "react-scripts test",
     "check-format": "prettier --check \"**/*.{ts,tsx}\"",
     "eject": "react-scripts eject",
+    "lint": "eslint --fix --ext .ts,.tsx ./src",
     "proxy": "lcp --proxyUrl https://smk3-ugm.herokuapp.com"
   },
   "eslintConfig": {
@@ -86,12 +88,8 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write \"**/*.{ts,tsx}\""
-    ],
-    "*.{html,css,less,ejs}": [
-      "prettier --write \"**/*.{ts,tsx}\""
+    "**/*.{js,jsx,ts,tsx}": [
+      "yarn lint"
     ]
   }
 }
