@@ -1,0 +1,9 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Check Eslint Rule
+# npm run lint
+
+#Format Code Prettier
+# npm run format-code
+yarn lint-staged --allow-empty

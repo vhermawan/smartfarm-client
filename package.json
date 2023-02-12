@@ -4,22 +4,27 @@
   "private": true,
   "dependencies": {
     "@amcharts/amcharts5": "^5.2.31",
-    "@emotion/react": "^11.10.4",
-    "@mantine/carousel": "^5.6.1",
-    "@mantine/core": "^5.6.1",
-    "@mantine/dates": "^5.6.1",
-    "@mantine/dropzone": "^5.6.1",
-    "@mantine/form": "^5.6.1",
-    "@mantine/hooks": "^5.6.1",
-    "@mantine/modals": "^5.6.1",
-    "@mantine/notifications": "^5.6.1",
-    "@mantine/nprogress": "^5.6.1",
+    "@emotion/react": "^11.10.5",
+    "@mantine/carousel": "^5.10.3",
+    "@mantine/core": "^5.10.3",
+    "@mantine/dates": "^5.10.3",
+    "@mantine/dropzone": "^5.10.3",
+    "@mantine/form": "^5.10.3",
+    "@mantine/hooks": "^5.10.3",
+    "@mantine/modals": "^5.10.3",
+    "@mantine/notifications": "^5.10.3",
+    "@mantine/nprogress": "^5.10.3",
     "@mantine/prism": "^5.6.1",
     "@mantine/rte": "^5.6.1",
-    "@mantine/spotlight": "^5.6.1",
+    "@mantine/spotlight": "^5.10.3",
+    "@mantine/tiptap": "^5.10.3",
+    "@tabler/icons": "1.119.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "@tiptap/extension-link": "^2.0.0-beta.217",
+    "@tiptap/react": "^2.0.0-beta.217",
+    "@tiptap/starter-kit": "^2.0.0-beta.217",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.0",
@@ -27,11 +32,14 @@
     "@xstate/react": "^3.0.1",
     "axios": "^1.1.3",
     "craco": "^0.0.3",
-    "dayjs": "^1.11.6",
-    "embla-carousel-react": "^7.0.3",
+    "dayjs": "^1.11.7",
+    "standard-version": "^9.5.0",
+    "embla-carousel-react": "^7.0.9",
+    "husky": "^8.0.3",
     "js-cookie": "^3.0.1",
     "local-cors-proxy": "^1.1.0",
     "mantine-datatable": "^1.7.11",
+    "prettier": "^2.8.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
@@ -45,6 +53,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "react-scripts test",
+    "check-format": "prettier --check \"**/*.{ts,tsx}\"",
     "eject": "react-scripts eject",
     "proxy": "lcp --proxyUrl https://smk3-ugm.herokuapp.com"
   },
@@ -67,6 +76,22 @@
     ]
   },
   "devDependencies": {
-    "@types/js-cookie": "^3.0.2"
+    "@types/js-cookie": "^3.0.2",
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write \"**/*.{ts,tsx}\""
+    ],
+    "*.{html,css,less,ejs}": [
+      "prettier --write \"**/*.{ts,tsx}\""
+    ]
   }
 }

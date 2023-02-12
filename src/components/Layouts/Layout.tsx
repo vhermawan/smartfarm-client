@@ -4,6 +4,7 @@ import {
   Header,
   ScrollArea,
   Box,
+  Container,
 } from '@mantine/core';
 import { MainLinks } from './_mainLinks';
 import { User } from './_user';
@@ -48,7 +49,12 @@ const Layout: React.FC<ILayout> = ({children}) => {
         main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
       })}
   >
-    {children}
+    <Container
+      size='xl'
+      style={{marginTop:'85px', width:'100%'}}
+    >
+      {children}
+    </Container>
   </AppShell>
   );
 }

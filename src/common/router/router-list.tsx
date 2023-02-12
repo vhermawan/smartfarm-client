@@ -1,10 +1,10 @@
 import HomePage from '@features/login/Login';
 import Dashboard from '@features/dashboard/Dashboard';
 import User from '@features/user/User';
-import Fasyankes from '@features/fasyankes/Fasyankes';
-import ReportYear from '@features/report-year/ReportYear';
+import Kandang from '@features/kandang';
+import Monitoring from '@features/monitoring';
+import Sensor from '@features/sensor';
 import { createBrowserRouter } from "react-router-dom";
-import ReportSemester from '@features/report-semester/ReportSemester';
 
 const routerList = createBrowserRouter([
   {
@@ -20,16 +20,16 @@ const routerList = createBrowserRouter([
     element: <User />,
   },
   {
-    path: "fasyankes",
-    element: <Fasyankes />,
+    path: "kandang",
+    element: <Kandang />,
   },
   {
-    path: "laporan-tahunan",
-    element: <ReportYear />,
+    path: "monitoring",
+    element: <Monitoring />,
   },
   {
-    path: "laporan-semester",
-    element: <ReportSemester />,
+    path: "sensor",
+    element: <Sensor />,
   },
 ]);
 
