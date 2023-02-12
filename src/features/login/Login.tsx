@@ -33,7 +33,7 @@ export default function Login() {
                 })
               }}
               required
-              error={state.context.isUsernameError ? "Username must be fillerd" : undefined}
+              error={state.context.isUsernameError ? "Username must be filled" : undefined}
             />
 
             <PasswordInput

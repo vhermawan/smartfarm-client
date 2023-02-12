@@ -4,10 +4,14 @@ import { DataTable } from 'mantine-datatable';
 import { useEffect, useState } from 'react';
 import employees from '../../data/example.json';
 import { IconEdit, IconEye, IconPlus, IconTrash } from "@tabler/icons";
+import { useActor } from "@xstate/react";
+import { servicekandangMachine } from "@common/machines/kandang-machine/kandangMachine";
+import ModalForm from "./component/ModalForm";
 
 const PAGE_SIZE = 15;
 
 export default function Kandang(){
+  const [state, dispatch] = useActor(servicekandangMachine);
   const [page, setPage] = useState(1);
   const [records, setRecords] = useState(employees.slice(0, PAGE_SIZE));
 
@@ -16,12 +20,26 @@ export default function Kandang(){
     const to = from + PAGE_SIZE;
     setRecords(employees.slice(from, to));
   }, [page]);
+
+  useEffect(()=> {
+    dispatch({
+      type: 'FETCHING_DATA',
+    })
+  },[dispatch])
+
+  console.log('state', state)
   
   return (
     <Layout>
       <Flex style={{marginBottom:'20px'}} wrap="wrap" justify="space-between">
         <Title order={3} weight={100}>Kandang</Title>
-        <Button leftIcon={<IconPlus/>}>
+        <Button leftIcon={<IconPlus/>} 
+          onClick={()=>
+            dispatch({
+              type:'OPEN_MODAL_CREATE_DATA'
+            })
+          }
+        >
           Tambah Kandang
         </Button>
       </Flex>
@@ -59,6 +77,7 @@ export default function Kandang(){
         onPageChange={(p) => setPage(p)}
       />
       </Box>
+      <ModalForm />
     </Layout>
   )
 }
