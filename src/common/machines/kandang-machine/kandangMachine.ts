@@ -1,7 +1,6 @@
 import { assign, createMachine, interpret } from 'xstate';
-// import { API } from '@common/api/api';
-// import { showNotification } from '@mantine/notifications';
-import { KandangModal } from '@features/kandang/types';
+import { KandangModal, ListKandang } from '@features/kandang/types';
+import { getDataKandang } from '@common/services/kandangService';
 
 type Events = 
   { type: 'FETCHING_DATA'} |
@@ -10,8 +9,14 @@ type Events =
 
 type Context = {
   createModal: KandangModal
+  data: ListKandang;
+  loading: boolean;
 }
-type Services = {}
+type Services = {
+  getDataKandang: {
+    data: ListKandang;
+  }
+}
 
 export const kandangMachine = createMachine({
   predictableActionArguments: true,
@@ -25,6 +30,11 @@ export const kandangMachine = createMachine({
     createModal: {
       isOpen: false,
     },
+    data: {
+      size: 0,
+      cages: [],
+    },
+    loading: true,
   },
   id:'kandang-machine',
   initial: 'idle',
@@ -32,11 +42,25 @@ export const kandangMachine = createMachine({
     idle: {
       on: {
         FETCHING_DATA: {
-          target: 'loaded'
+          target: 'loading'
         }
       }
     },
-    loading: {},
+    loading: {
+      invoke: {
+        src: 'getDataKandang',
+        onDone: [
+          {
+            target: 'loaded',
+            actions: 'set data kandang'
+          }
+        ],
+        onError: [{
+          target: 'loaded'
+          // actions: 
+        }],
+      }
+    },
     loaded: {
       on: {
         OPEN_MODAL_CREATE_DATA: {
@@ -56,20 +80,31 @@ export const kandangMachine = createMachine({
   }
 },{
   actions: {
-    'open-modal-create': assign(() => {
+    'open-modal-create': assign((_context) => {
       return{
         createModal:{
           isOpen: true
         }
       }
     }),
-    'close-modal-create': assign(() => {
+    'close-modal-create': assign((_context) => {
       return{
         createModal:{
           isOpen: false
         }
       }
+    }),
+    'set data kandang': assign((context: Context, event) => {
+      return {
+        loading: false,
+        data: event.data
+      }
     })
+  },
+  services: {
+    getDataKandang: (_context: Context) => {
+      return getDataKandang();
+    }
   }
 })
 

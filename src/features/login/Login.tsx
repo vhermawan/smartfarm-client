@@ -1,11 +1,14 @@
 
 import { TextInput, Button, Group, Box, PasswordInput, Center } from '@mantine/core';
 import { useMachine } from '@xstate/react';
-import { loginMachine } from '@common/machines/loginMachines';
+import { loginMachine } from '@common/machines/login-machine/loginMachines';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
 export default function Login() {
   const history = useNavigate();
+  const [token] = useState(Cookies.get('token'))
   const [state, dispatch] = useMachine(loginMachine, {
     actions:{
       redirectDashboardPage:() => {
@@ -13,6 +16,13 @@ export default function Login() {
       },
     }
   });
+
+  useEffect(() => {
+    if (token) {
+      history("/dashboard");
+    }
+  }, [token, history])
+
   return (
     <>
       <Center sx={{ width: '700px', minHeight: '100vh', padding:'20px' }}  px="xl" mx="auto" my="auto">

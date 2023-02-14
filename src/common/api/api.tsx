@@ -1,10 +1,11 @@
 import axios, { RawAxiosRequestHeaders } from 'axios';
 import { API_URL } from './initProperties';
+import Cookies from 'js-cookie';
 
 export const API = {
   post : async function (endPoint: string, input: Object) {        
     let headers: RawAxiosRequestHeaders = {};
-    let token = localStorage.getItem("token");
+    let token = Cookies.get("token");
     
     if(token !== null)
       headers.Authorization = `Bearer ${token}`;
@@ -19,7 +20,7 @@ export const API = {
 
   get : async function (endPoint: string) {        
     let headers: RawAxiosRequestHeaders = {};
-    let token = localStorage.getItem("token");
+    let token = Cookies.get("token");
     
     if(token !== null)
       headers.Authorization = `Bearer ${token}`;
@@ -34,7 +35,7 @@ export const API = {
 
   put : async function (endPoint: string, input: Object) {        
     let headers: RawAxiosRequestHeaders = {};
-    let token = localStorage.getItem("token");
+    let token = Cookies.get("token");
     
     if(token !== null)
       headers.Authorization = `Bearer ${token}`;
@@ -49,7 +50,7 @@ export const API = {
 
   delete : async function (endPoint: string) {        
     let headers: RawAxiosRequestHeaders = {};
-    let token = localStorage.getItem("token");
+    let token = Cookies.get("token");
     
     if(token !== null)
       headers.Authorization = `Bearer ${token}`;

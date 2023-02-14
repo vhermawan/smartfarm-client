@@ -13,7 +13,7 @@ root.render(
   <React.StrictMode>
      <MantineProvider withGlobalStyles withNormalizeCSS>
       <NotificationsProvider position="top-right" zIndex={2077}>
-          <Routers/>
+        <Routers/>
       </NotificationsProvider>
      </MantineProvider>
   </React.StrictMode>

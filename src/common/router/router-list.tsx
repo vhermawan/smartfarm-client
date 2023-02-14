@@ -1,4 +1,4 @@
-import HomePage from '@features/login/Login';
+import Login from '@features/login/Login';
 import Dashboard from '@features/dashboard/Dashboard';
 import User from '@features/user/User';
 import Kandang from '@features/kandang';
@@ -9,7 +9,7 @@ import { createBrowserRouter } from "react-router-dom";
 const routerList = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <Login />,
   },
   {
     path: "dashboard",

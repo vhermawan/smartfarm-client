@@ -1,7 +1,7 @@
 import { assign, createMachine } from 'xstate';
 import { API } from '@common/api/api';
-import { showNotification } from '@mantine/notifications';
 import Cookies from 'js-cookie';
+import { Toast } from '@common/helpers/toast';
 
 export const loginMachine = 
 /** @xstate-layout N4IgpgJg5mDOIC5QBsD2UCWA7AtAWwEMBjAC2zADoMJkwBiASQDkAFAVQBUB9AUQFkAggwAyAbQAMAXUSgADqlgYALhlRYZIAB6IAbOIoB2HQA4DAFnEBOAIyWzlkzoA0IAJ6IATNf1nTvyx4GxtYeAMwGAL4RLmiYuISk5FQ09Mzs3CwCAMpZAOoA8gBKACIS0kgg8ooqahraCGYeFOItrW2t1i7uCMahFNYArDoeA4MG4mY6OpbGUTHo2PjEZFiU1LR0AMLCDJsA0lxZbABCfAzcx5wc+UxlGlXKquoV9WFNoeLDox46g58DoS6iFCHiaAwGBg+OgGoOMvQGcxAsUWCRWlDQBAg2CgdAgajWWAAbqgANbohbxZZJDFYrBQBDYYlEAg1LBlO4VB6suqIII6Ci9cxw6w6MyhUKDIEIDzGAbNAYtDz2Uzg8ShRHIymJVYUGnYuhgABOhtQhoosmQLIAZqa8LqKUtteTMdiGUTUMzWeypPcFI9ai9gcZLP0TAZxh5LOLRVLQX1xbCIQYBmZzKmotEQFhUBA4BpNY60claL7qk8eT1jBRQgMo+HxOHpsGPFKJWZDCFRorwSDIpmC6jqagXXTS-7nqB6gNjO2zEMftZrGKrAZLLHZf0Oh9jJ8QWYNQ7BzrYABXIhEODwTl+7mBhDeawGZqtSOgyNWZxuTwzii18JGEJxllSwDziQtyDHW9J0QHA5UseCEMQxDAS-BAcB0DMIiAA */
@@ -89,23 +89,7 @@ createMachine (
       loading: (context, _) => !context.loading
     }),
     showToastError:(_, eventData) => {
-      showNotification({
-        title: 'Error',
-        message: eventData.data.statusText,
-        styles: (theme) => ({
-          root: {
-            backgroundColor: theme.colors.red[6],
-            borderColor: theme.colors.red[6],
-            '&::before': { backgroundColor: theme.white },
-          },
-          title: { color: theme.white },
-          description: { color: theme.white },
-          closeButton: {
-            color: theme.white,
-            '&:hover': { backgroundColor: theme.colors.red[7] },
-          },
-        }),
-      })
+      Toast(eventData.data.statusText, true)
     },
   },
   services:{ /*to make fetch data return in promise*/
@@ -114,7 +98,7 @@ createMachine (
         username: context.username,
         password: context.password,
       })
-      Cookies.set('token', token.data)
+      Cookies.set('token', token.data.data.access_token)
       return token;
     },
   },

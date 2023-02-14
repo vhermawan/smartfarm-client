@@ -5,22 +5,32 @@ import {
   ScrollArea,
   Box,
   Container,
+  Button,
+  UnstyledButton,
+  Group,
+  ThemeIcon,
+  Text,
 } from '@mantine/core';
 import { MainLinks } from './_mainLinks';
-import { User } from './_user';
 import { Brand } from './_brand';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { IconLogout } from '@tabler/icons';
 
 interface ILayout {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<ILayout> = ({children}) => {
-
+  const history = useNavigate();
   const token = Cookies.get("token")
   if (!token) {
     return <Navigate to="/" replace />;
+  }
+
+  const handleLogout = () => {
+    Cookies.remove("token")
+    history("/");
   }
 
   return (
@@ -36,7 +46,46 @@ const Layout: React.FC<ILayout> = ({children}) => {
           </Box>
         </Navbar.Section>
         <Navbar.Section>
-          <User />
+          <UnstyledButton
+            sx={(theme) => ({
+              display: 'block',
+              width: '100%',
+              padding: theme.spacing.xs,
+              borderRadius: theme.radius.sm,
+              color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+
+              '&:hover': {
+                backgroundColor:
+                  theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+              },
+            })}
+          >
+            <Button 
+              variant='white'
+              styles={(theme) => ({
+                root: {
+                  backgroundColor: 'transparent',
+                  border: 0,
+                  height: 42,
+                  paddingLeft: 20,
+                  paddingRight: 20,
+        
+                  '&:hover': {
+                    backgroundColor: 'transparent',
+                  },
+                },
+              })}
+              onClick={handleLogout}
+            >
+              <Group>
+                <ThemeIcon color={'blue'} variant="light">
+                  <IconLogout />
+                </ThemeIcon>
+                
+                <Text size="sm">Log out</Text>
+              </Group>
+            </Button>
+          </UnstyledButton>
         </Navbar.Section>
       </Navbar>
       }
